@@ -60,9 +60,10 @@ Each step includes:
 
 At the end, a **bar chart and line chart** show the full improvement progression across all 7 steps.
 
-### Part 2: K-Means Clustering
+### Part 2: K-Means Clustering & Mission 05 Secret Base Discovery
 
-**Task:** Discover natural location clusters in Spider-Man sightings (unsupervised).
+**Task 1:** Discover natural geographic patrol clusters in Spider-Man sightings (unsupervised).
+**Task 2 (Mission 05):** Solve the unscored Kaggle detective mission to pinpoint Spider-Man's secret operating base.
 
 | Step | What it Does |
 |---|---|
@@ -70,6 +71,16 @@ At the end, a **bar chart and line chart** show the full improvement progression
 | Silhouette Score | Measures how well-separated clusters are |
 | Cluster Visualization | Scatter plot of sightings colored by cluster, with cluster centers marked |
 | Init Comparison | Compares random init vs K-Means++ initialization |
+| Secret Base Discovery | Identifies morning departure and nighttime return hotspots to unmask the base |
+
+#### 🕵️ Secret Base Discovery Findings:
+- **Primary District:** `Brooklyn Central 0`
+- **Borough:** `Brooklyn`
+- **Estimated Coordinates:** `40.58975° N, -74.01696° W`
+- **Why this is the base:**
+  1. **Daily Departures:** Highest concentration of first-recorded daily sightings (45 mornings).
+  2. **Daily Returns:** Highest concentration of final nighttime sightings (35 nights).
+  3. **Demographics:** According to `locations.csv`, this zone has a high residential score (0.838) and low police patrol activity (0.412), making it the ideal quiet home base.
 
 ## Libraries Used
 
@@ -96,8 +107,9 @@ At the end, a **bar chart and line chart** show the full improvement progression
 10. Elbow method curve
 11. Silhouette score vs K
 12. Cluster scatter plot with centers
-13. Progressive improvement bar chart
-14. Accuracy trajectory line chart
+13. Spider-Man secret operating base map (Mission 05)
+14. Progressive improvement bar chart
+15. Accuracy trajectory line chart
 
 ## Notebook Sections
 
