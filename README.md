@@ -5,52 +5,109 @@ A machine learning project that uses the [Spidey Tracker: Spiderman Dataset](htt
 ## Dataset
 
 - **Source:** [Kaggle - Spidey Tracker](https://www.kaggle.com/datasets/umuttuygurr/spidey-tracker-spiderman-dataset)
-- **Size:** 86,631 sighting reports + supporting tables
+- **Size:** 86,631 sighting reports + supporting tables (crimes, locations, weather, witnesses)
 - **License:** CC0 (Public Domain)
 
-The dataset contains synthetic Spider-Man sighting reports across a New York-inspired city. Each sighting has location coordinates, timestamps, confidence scores, and a verified/unverified label.
+The dataset contains synthetic Spider-Man sighting reports across a New York-inspired city. Each sighting includes location coordinates, timestamps, confidence scores, and a verified/unverified label. Some sightings are real, some are mistakes, and some are deliberate hoaxes.
+
+### Files Used
+
+| File | Rows | Purpose |
+|---|---|---|
+| `sightings.csv` | 86,631 | Main dataset — used for K-NN classification and K-Means clustering |
 
 ## Project Structure
 
 ```
 mlassignment1/
-├── SpideyTracker_KNN_KMeans.ipynb   # Main Colab notebook
+├── SpideyTracker_KNN_KMeans.ipynb   # Main Colab notebook (run this)
 ├── README.md                         # This file
 └── .gitignore
 ```
 
 ## How to Run
 
-1. Open the notebook in Google Colab
-2. Run all cells — the dataset downloads automatically via `kagglehub`
-3. No local setup needed
+1. Open [Google Colab](https://colab.research.google.com/)
+2. Upload `SpideyTracker_KNN_KMeans.ipynb` (or open from GitHub)
+3. Click **Runtime → Run all**
+4. The dataset downloads automatically via `kagglehub` — no manual download needed
+5. All outputs (tables, charts, metrics) appear inline
+
+**No local setup required.** Everything runs in Colab with pre-installed libraries.
 
 ## What This Project Does
 
-### K-NN Classification
-Predicts whether a Spider-Man sighting is **verified or not** (`is_verified` column).
+### Part 1: K-NN Classification
 
-### K-Means Clustering
-Groups sighting locations into clusters to find patterns in where Spider-Man is spotted.
+**Task:** Predict whether a Spider-Man sighting is verified or not (`is_verified` = 0 or 1).
 
-## Methodology & Optimization Steps
+The model is improved step-by-step, with accuracy measured after **every single change**:
 
-The model is improved step-by-step, with accuracy measured after each change:
-
-| # | Optimization Step | What Changed |
+| Step | What Changed | Why |
 |---|---|---|
-| 1 | Baseline | Default KNN (K=5, no scaling) |
-| 2 | Feature Scaling | StandardScaler normalization |
-| 3 | K Tuning | Test K=1 to 30, pick the best |
-| 4 | Distance Metric | Compare euclidean, manhattan, chebyshev |
-| 5 | Weighted Voting | uniform vs distance-weighted neighbors |
-| 6 | Feature Selection | ANOVA F-test to keep top features |
-| 7 | Cross-Validation | 5-fold CV for reliable accuracy |
+| 1. Baseline | Default KNN (K=5, no scaling, minkowski) | Starting point to measure against |
+| 2. Feature Scaling | Applied StandardScaler | KNN uses distances — unscaled features bias results |
+| 3. K Tuning | Tested K=1 to 30, picked best | Default K=5 may not be optimal for this data |
+| 4. Distance Metric | Compared euclidean, manhattan, chebyshev | Different metrics suit different data shapes |
+| 5. Weighted Voting | Compared uniform vs distance weights | Closer neighbors should matter more |
+| 6. Feature Selection | ANOVA F-test, kept top features | Removing noise features can improve accuracy |
+| 7. Cross-Validation | 5-fold CV on final model | Single split can be misleading — CV is more reliable |
+
+Each step includes:
+- The accuracy number
+- The change from the previous step (+ or -)
+- A visualization (confusion matrix, bar chart, or line plot)
+
+At the end, a **bar chart and line chart** show the full improvement progression across all 7 steps.
+
+### Part 2: K-Means Clustering
+
+**Task:** Discover natural location clusters in Spider-Man sightings (unsupervised).
+
+| Step | What it Does |
+|---|---|
+| Elbow Method | Plots inertia vs K to find the "elbow" point |
+| Silhouette Score | Measures how well-separated clusters are |
+| Cluster Visualization | Scatter plot of sightings colored by cluster, with cluster centers marked |
+| Init Comparison | Compares random init vs K-Means++ initialization |
 
 ## Libraries Used
 
-- `numpy` — numerical operations
-- `pandas` — data loading and manipulation
-- `matplotlib` — plotting
-- `seaborn` — statistical visualizations
-- `scikit-learn` — KNN, KMeans, preprocessing, evaluation
+| Library | Purpose |
+|---|---|
+| `numpy` | Numerical operations |
+| `pandas` | Data loading and manipulation |
+| `matplotlib` | Charts and plots |
+| `seaborn` | Statistical visualizations, heatmaps |
+| `scikit-learn` | KNeighborsClassifier, KMeans, StandardScaler, SelectKBest, cross_val_score, metrics |
+| `kagglehub` | Download dataset from Kaggle |
+
+## Visualizations Included
+
+1. Target variable distribution (bar + pie chart)
+2. Feature correlation heatmap
+3. Feature distributions (histograms)
+4. Baseline confusion matrix
+5. K vs Accuracy curve
+6. Distance metric comparison bar chart
+7. Number of features vs accuracy curve
+8. Feature importance horizontal bar chart
+9. Baseline vs Optimized confusion matrix side-by-side
+10. Elbow method curve
+11. Silhouette score vs K
+12. Cluster scatter plot with centers
+13. Progressive improvement bar chart
+14. Accuracy trajectory line chart
+
+## Notebook Sections
+
+| Section | Description |
+|---|---|
+| 1. Setup & Imports | Install kagglehub, import libraries |
+| 2. Download & Load | Download from Kaggle, load sightings.csv |
+| 3. EDA | Explore data shape, types, missing values, distributions |
+| 4. Preprocessing | Select features, handle nulls, train/test split |
+| 5. K-NN Classification | 7-step progressive optimization |
+| 6. K-Means Clustering | Location clustering with elbow + silhouette |
+| 7. Improvement Summary | Full progression table + charts |
+| 8. Conclusion | Key takeaways |
