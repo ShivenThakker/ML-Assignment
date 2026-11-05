@@ -1,18 +1,5 @@
 # 🕷️ Spidey-Tracker OS: NYPD & Daily Bugle Threat Verification Engine
 
-```text
-       /\             /\
-      /  \  __   __  /  \
-     /    \(  \_/  )/    \
-    /  /\  \       /  /\  \
-   /  /  \  \     /  /  \  \
-  (  (    \  )   (  /    )  )
-   \  \    \(     )/    /  /
-    \  \___/  ===  \___/  /
-     \_      /   \      _/
-       \____/     \____/
-```
-
 **Interactive Web Application:** [https://shiventhakker.github.io/ML-Assignment/](https://shiventhakker.github.io/ML-Assignment/)  
 **Notebook:** [`SpideyTracker_KNN_KMeans.ipynb`](SpideyTracker_KNN_KMeans.ipynb)  
 **Dataset:** [Kaggle — Spidey Tracker (86,631 Sightings)](https://www.kaggle.com/datasets/umuttuygurr/spidey-tracker-spiderman-dataset)  
