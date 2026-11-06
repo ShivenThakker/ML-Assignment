@@ -185,13 +185,13 @@ Rather than presenting an isolated static model, the development architecture fo
 
 | Stage | Suit Upgrade Milestone | Algorithmic Intervention | Mathematical Form / Parameters | Validation Accuracy | Net Delta | Core Diagnostic Finding |
 |:---:|---|---|---|:---:|:---:|---|
-| **1** | 🧵 **Homemade Hoodie Suit** | Uncalibrated Prototype | Default Scikit-Learn: $K=5$, $p=2$, Uniform, No Scaling | **`72.41%`** | Baseline | Multikilometer crime distance features ($0\text{--}5000\text{ m}$) completely dominated decimal confidence scores ($0\text{--}1$). |
-| **2** | 🕸️ **Classic Spidey Suit** | Z-Score Standardization | $z = (x - \mu) / \sigma$ across all feature dimensions | **`85.23%`** | **`+12.82%`** | Neutralized isotropic scale distortion; confidence and velocity gained proportionate geometric influence. |
-| **3** | 🎯 **Advanced Web-Shooters** | Neighborhood Search | Parameter sweep across $K \in [1, 30]$ | **`88.45%`** | **`+3.22%`** | $K=1$ was susceptible to outliers; $K \ge 15$ over-smoothed boundaries. Global peak locked at $K^* = 7$. |
-| **4** | 🏙️ **Spider-Armor MK I** | Topology Realignment | Manhattan $L_1$ Norm: $D_1(\mathbf{x}, \mathbf{z}) = \sum \|x_j - z_j\|$ | **`89.30%`** | **`+0.85%`** | Aligned neighborhood geometry with the rectilinear street grid of New York City. |
-| **5** | ⚖️ **Stealth Big Time Suit** | Distance-Decay Kernel | Non-uniform weighting: $w_i = (D_1(\mathbf{x}, \mathbf{x}_i) + \epsilon)^{-1}$ | **`90.15%`** | **`+0.85%`** | Highly proximate witness observations cast decisive votes, suppressing ambiguous peripheral points. |
-| **6** | 🔬 **Superior Spider Suit** | Univariate Noise Filtering | ANOVA F-statistic ranking via `SelectKBest` | **`91.10%`** | **`+0.95%`** | Pruned noisy variables (ambient crowd density, raw report delays), isolating high-signal kinematics and crime proximity. |
-| **7** | 🛡️ **Iron Spider Stark Suit** | Multi-Fold Stratification | 5-Fold Stratified Cross-Validation on held-out test data | **`91.25%`** | **`+0.15%`** | Generalization stability confirmed: $\mu = 91.10\%$, $\sigma = 0.0042$, establishing model robustness against data drift. |
+| **1** | **Homemade Hoodie Suit** | Uncalibrated Prototype | Default Scikit-Learn: $K=5$, $p=2$, Uniform, No Scaling | **`72.41%`** | Baseline | Multikilometer crime distance features ($0\text{--}5000\text{ m}$) completely dominated decimal confidence scores ($0\text{--}1$). |
+| **2** | **Classic Spidey Suit** | Z-Score Standardization | $z = (x - \mu) / \sigma$ across all feature dimensions | **`85.23%`** | **`+12.82%`** | Neutralized isotropic scale distortion; confidence and velocity gained proportionate geometric influence. |
+| **3** | **Advanced Web-Shooters** | Neighborhood Search | Parameter sweep across $K \in [1, 30]$ | **`88.45%`** | **`+3.22%`** | $K=1$ was susceptible to outliers; $K \ge 15$ over-smoothed boundaries. Global peak locked at $K^* = 7$. |
+| **4** | **Spider-Armor MK I** | Topology Realignment | Manhattan $L_1$ Norm: $D_1(\mathbf{x}, \mathbf{z}) = \sum \|x_j - z_j\|$ | **`89.30%`** | **`+0.85%`** | Aligned neighborhood geometry with the rectilinear street grid of New York City. |
+| **5** | **Stealth Big Time Suit** | Distance-Decay Kernel | Non-uniform weighting: $w_i = (D_1(\mathbf{x}, \mathbf{x}_i) + \epsilon)^{-1}$ | **`90.15%`** | **`+0.85%`** | Highly proximate witness observations cast decisive votes, suppressing ambiguous peripheral points. |
+| **6** | **Superior Spider Suit** | Univariate Noise Filtering | ANOVA F-statistic ranking via `SelectKBest` | **`91.10%`** | **`+0.95%`** | Pruned noisy variables (ambient crowd density, raw report delays), isolating high-signal kinematics and crime proximity. |
+| **7** | **Iron Spider Stark Suit** | Multi-Fold Stratification | 5-Fold Stratified Cross-Validation on held-out test data | **`91.25%`** | **`+0.15%`** | Generalization stability confirmed: $\mu = 91.10\%$, $\sigma = 0.0042$, establishing model robustness against data drift. |
 
 ---
 
