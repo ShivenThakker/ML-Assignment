@@ -643,10 +643,15 @@
 
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-    // Dark-themed CartoDB Tiles matching spideytracker.net aesthetic
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 18,
-      subdomains: 'abcd'
+    // Tactical Dark Basemap (Esri World Dark Gray - Free & No API Key Required)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16,
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+    }).addTo(map);
+
+    // Reference Labels & High-Contrast Street Overlay
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16
     }).addTo(map);
 
     // Sample Verified High-Frequency Patrol Sectors (from K-Means Centroids)
