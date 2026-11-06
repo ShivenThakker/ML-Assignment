@@ -264,7 +264,7 @@ To provide immediate, zero-installation evaluation, the trained intelligence was
 
 ## 7. Comprehensive Visual Intelligence Inventory
 
-The accompanying notebook generates 15 publication-standard analytical charts rendered with a custom Marvel comic color palette (**Spider-Man Red `#D82C2C`**, **Web Blue `#094074`**, **Symbiote Dark `#1B1B1B`**, **Spider-Sense Gold `#F4D03F`**, **Mysterio Purple `#8E44AD`**):
+The accompanying notebook generates 18 publication-standard analytical charts rendered with a custom Marvel comic color palette (**Spider-Man Red `#D82C2C`**, **Web Blue `#094074`**, **Symbiote Dark `#1B1B1B`**, **Spider-Sense Gold `#F4D03F`**, **Mysterio Purple `#8E44AD`**):
 
 1. **Target Distribution Visualizer:** Comparative bar and donut visualization illustrating class imbalance ($68.1\%$ Hoax vs $31.9\%$ Verified).
 2. **Sensor Correlation Heatmap:** Lower-triangular Pearson correlation matrix across all numeric features.
@@ -278,9 +278,12 @@ The accompanying notebook generates 15 publication-standard analytical charts re
 10. **Patrol Sector Elbow Curve:** WCSS Inertia plotted across $K \in [2, 12]$ revealing the inflection point.
 11. **Silhouette Separation Curve:** Silhouette scores across $K$ validating optimal spatial partition.
 12. **Tactical Patrol Map:** Geospatial scatter plot of sightings colored by K-Means patrol sectors with marked cluster centroids.
-13. **Secret Sanctuary Triangulation Map:** Citywide map highlighting all sightings, verified paths, and the golden beacon at Brooklyn Central.
-14. **Suit Upgrade Chronology Bar Chart:** Step-by-step bar chart illustrating accuracy deltas across all 7 development cycles.
-15. **Spider-Sense Trajectory Line Chart:** Continuous trajectory tracking overall optimization from $72.41\%$ to $91.25\%$.
+13. **Morning Departures vs Nighttime Returns:** Side-by-side comparative horizontal bar charts of daily first appearances (sunrise departures) vs daily last appearances (bedtime returns) by district.
+14. **Nocturnal Rest Hours & Diurnal Rhythm:** Two-panel visualizer showing 01:00–05:00 AM resting sighting concentration across districts and the 24-hour diurnal curve in Brooklyn Central.
+15. **Tactical Concealment Demographics:** Scatter plot of all 46 NYC districts cross-referencing Residential Cover vs NYPD Police Surveillance from `locations.csv`.
+16. **Precision Sanctuary Triangulation Map:** Two-panel tactical map featuring Citywide Patrol Overview and Zoomed Brooklyn Sector with candidate vectors, coordinate crosshairs, and the golden beacon at `40.58975° N, -74.01696° W`.
+17. **Suit Upgrade Chronology Bar Chart:** Step-by-step bar chart illustrating accuracy deltas across all 7 development cycles.
+18. **Spider-Sense Trajectory Line Chart:** Continuous trajectory tracking overall optimization from $72.41\%$ to $91.25\%$.
 
 ---
 
