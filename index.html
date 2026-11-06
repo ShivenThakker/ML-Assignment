@@ -202,59 +202,166 @@
       z-index: 1;
     }
 
-    /* Radar Widget (Bottom-Right) */
+    /* Tactical Interactive Radar Widget (Bottom-Right) */
     .radar-widget {
       position: absolute;
       bottom: 24px;
       right: 24px;
-      width: 130px;
-      height: 130px;
-      background: radial-gradient(circle, rgba(10, 30, 60, 0.85) 0%, rgba(3, 8, 16, 0.95) 100%);
+      width: 154px;
+      height: 154px;
+      background: radial-gradient(circle, rgba(6, 20, 42, 0.95) 0%, rgba(2, 6, 14, 0.98) 100%);
       border: 2px solid var(--neon-cyan);
       border-radius: 50%;
-      box-shadow: 0 0 20px var(--cyan-glow);
+      box-shadow: 0 0 25px var(--cyan-glow), inset 0 0 15px rgba(0, 229, 255, 0.2);
       z-index: 990;
       overflow: hidden;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .radar-widget:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 35px var(--cyan-glow), inset 0 0 20px rgba(0, 229, 255, 0.4);
+    }
+
+    #radar-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .radar-badge {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.55rem;
+      color: var(--neon-cyan);
+      letter-spacing: 1.5px;
+      font-weight: bold;
+      pointer-events: none;
+      text-shadow: 0 0 6px var(--cyan-glow);
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .radar-subtext {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.50rem;
+      color: #A8E1FE;
+      letter-spacing: 1px;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    /* Location Selector & Live Threat Meter */
+    .hud-select {
+      width: 100%;
+      padding: 6px 8px;
+      background: #091528;
+      border: 1px solid var(--hud-border);
+      color: #A8E1FE;
+      font-family: inherit;
+      font-size: 0.78rem;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .hud-select:focus {
+      border-color: var(--neon-cyan);
+    }
+
+    .gauge-container {
+      width: 100%;
+      height: 9px;
+      background: #081426;
+      border: 1px solid #1A3A60;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0;
+      position: relative;
+    }
+
+    .gauge-bar {
+      height: 100%;
+      width: 85%;
+      background: linear-gradient(90deg, #5C2D91, #F1C40F, #E23636);
+      transition: width 0.15s ease, background 0.25s ease;
+      box-shadow: 0 0 10px rgba(226, 54, 54, 0.6);
+    }
+
+    .diag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .diag-chip {
+      background: rgba(14, 40, 75, 0.6);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      padding: 4px 6px;
+      font-size: 0.68rem;
+      color: #A8E1FE;
+      border-radius: 2px;
+    }
+
+    .diag-chip b {
+      color: #FFF;
+    }
+
+    /* Dynamic Marker Radar Pulse Wave */
+    .scan-pulse-container {
+      position: relative;
+      width: 32px;
+      height: 32px;
+    }
+
+    .scan-pulse-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--spidey-red);
+      box-shadow: 0 0 12px var(--spidey-red);
+      border: 2px solid #FFF;
+      z-index: 2;
+    }
+
+    .scan-pulse-dot.hoax {
+      background: #8E44AD;
+      box-shadow: 0 0 12px #8E44AD;
+    }
+
+    .scan-pulse-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--spidey-red);
+      animation: scanRingAnim 1.6s ease-out infinite;
       pointer-events: none;
     }
 
-    .radar-grid-lines {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, transparent 30%, rgba(0, 229, 255, 0.15) 31%, transparent 32%),
-                  radial-gradient(circle, transparent 60%, rgba(0, 229, 255, 0.15) 61%, transparent 62%),
-                  linear-gradient(to right, transparent 49.5%, rgba(0, 229, 255, 0.25) 50%, transparent 50.5%),
-                  linear-gradient(to bottom, transparent 49.5%, rgba(0, 229, 255, 0.25) 50%, transparent 50.5%);
+    .scan-pulse-ring.hoax {
+      border-color: #8E44AD;
     }
 
-    .radar-sweep {
-      position: absolute;
-      inset: 0;
-      background: conic-gradient(from 0deg at 50% 50%, rgba(0, 229, 255, 0.4) 0deg, transparent 60deg, transparent 360deg);
-      border-radius: 50%;
-      animation: sweepRadar 3s linear infinite;
-    }
-
-    @keyframes sweepRadar {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .radar-base-blip {
-      position: absolute;
-      top: 65%;
-      left: 46%;
-      width: 7px;
-      height: 7px;
-      background: var(--spider-gold);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--spider-gold);
-      animation: pulseBlip 1.5s infinite;
-    }
-
-    @keyframes pulseBlip {
-      0%, 100% { opacity: 0.4; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.4); }
+    @keyframes scanRingAnim {
+      0% { width: 14px; height: 14px; opacity: 1; }
+      100% { width: 44px; height: 44px; opacity: 0; }
     }
 
     /* Modal Windows (Activity Log, Scanner, Web Watch) */
@@ -413,7 +520,7 @@
       border: 1px solid var(--terminal-green);
       background: rgba(0, 255, 102, 0.08);
       border-radius: 2px;
-      display: none;
+      display: block;
     }
 
     .result-badge {
@@ -527,11 +634,11 @@
     <!-- Interactive NYC Map -->
     <div id="map"></div>
 
-    <!-- Mini Radar Sweep Widget -->
-    <div class="radar-widget">
-      <div class="radar-grid-lines"></div>
-      <div class="radar-sweep"></div>
-      <div class="radar-base-blip" title="Triangulated Sanctuary"></div>
+    <!-- Tactical Interactive Radar Canvas Widget -->
+    <div class="radar-widget" id="radar-container" onclick="cycleRadarFocus()" title="Tactical Radar (Click to cycle viewpoints)">
+      <canvas id="radar-canvas" width="300" height="300"></canvas>
+      <div class="radar-badge">TACTICAL RADAR</div>
+      <div class="radar-subtext" id="radar-status">SWEEP: 360° • LIVE</div>
     </div>
 
     <!-- Modal 1: Sighting Scanner (K-NN Classifier Interactive Demo) -->
@@ -545,40 +652,72 @@
           Input witness sensor observations into our tuned K-NN Spider-Sense model to separate authentic emergencies from Daily Bugle hoaxes.
         </p>
 
+        <!-- Incident Geographic Location Selector -->
         <div class="form-group">
-          <label><span>Speed (km/h):</span> <span id="val-speed" style="color:var(--neon-cyan)">75</span></label>
-          <input type="range" id="input-speed" min="0" max="140" value="75" oninput="updateVal('speed', this.value)">
+          <label><span>Incident Location:</span> <span id="val-loc" style="color:var(--spider-gold)">Times Square</span></label>
+          <select id="select-loc" class="hud-select" onchange="setPresetLocation(this.value)">
+            <option value="times_sq">Times Square / Midtown (Manhattan)</option>
+            <option value="wall_st">Financial District / Wall St (Manhattan)</option>
+            <option value="dumbo">DUMBO / Brooklyn Bridge (Brooklyn)</option>
+            <option value="williamsburg">Williamsburg Highline (Brooklyn)</option>
+            <option value="astoria">Astoria Boulevard (Queens)</option>
+            <option value="bronx">South Bronx Transit Hub (Bronx)</option>
+            <option value="secret_base">★ Secret Sanctuary Vicinity (Brooklyn Central)</option>
+          </select>
+          <div style="font-size:0.68rem; color:var(--text-muted); margin-top:3px;">
+            💡 <i>Click anywhere on the city map to instantly reposition incident coordinates!</i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><span>Velocity (km/h):</span> <span id="val-speed" style="color:var(--neon-cyan)">75</span></label>
+          <input type="range" id="input-speed" min="0" max="140" value="75" oninput="updateVal('speed', this.value); runSpiderSenseScan(false)">
         </div>
 
         <div class="form-group">
           <label><span>Altitude (meters):</span> <span id="val-alt" style="color:var(--neon-cyan)">90</span></label>
-          <input type="range" id="input-alt" min="0" max="250" value="90" oninput="updateVal('alt', this.value)">
+          <input type="range" id="input-alt" min="0" max="250" value="90" oninput="updateVal('alt', this.value); runSpiderSenseScan(false)">
         </div>
 
         <div class="form-group">
           <label><span>Witness Count:</span> <span id="val-witness" style="color:var(--neon-cyan)">4</span></label>
-          <input type="range" id="input-witness" min="1" max="15" value="4" oninput="updateVal('witness', this.value)">
+          <input type="range" id="input-witness" min="1" max="15" value="4" oninput="updateVal('witness', this.value); runSpiderSenseScan(false)">
         </div>
 
         <div class="form-group">
           <label><span>Distance to Nearest Crime (m):</span> <span id="val-crime" style="color:var(--neon-cyan)">350</span></label>
-          <input type="range" id="input-crime" min="50" max="3000" step="50" value="350" oninput="updateVal('crime', this.value)">
+          <input type="range" id="input-crime" min="50" max="3000" step="50" value="350" oninput="updateVal('crime', this.value); runSpiderSenseScan(false)">
         </div>
 
         <div class="form-group">
-          <label><span>Tracker Confidence:</span> <span id="val-conf" style="color:var(--neon-cyan)">0.82</span></label>
-          <input type="range" id="input-conf" min="0.1" max="1.0" step="0.05" value="0.82" oninput="updateVal('conf', this.value)">
+          <label><span>Tracker Sensor Confidence:</span> <span id="val-conf" style="color:var(--neon-cyan)">0.82</span></label>
+          <input type="range" id="input-conf" min="0.10" max="1.0" step="0.05" value="0.82" oninput="updateVal('conf', this.value); runSpiderSenseScan(false)">
         </div>
 
-        <button class="scan-action-btn" onclick="runSpiderSenseScan()">Run Spider-Sense Scan</button>
-
+        <!-- Live Authenticity Threat Meter & Diagnostic Chips -->
         <div id="scanner-result" class="scanner-result">
-          <div id="result-badge" class="result-badge verified">VERIFIED SPIDER-MAN SIGHTING</div>
-          <div style="font-size: 0.82rem; font-weight: bold; margin-bottom: 4px;" id="result-score">AUTHENTICITY CONFIDENCE: 94.6%</div>
-          <p style="color: var(--text-muted); font-size: 0.74rem;" id="result-explanation">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <div id="result-badge" class="result-badge verified">🕷️ CONFIRMED SPIDER-MAN</div>
+            <span id="result-score" style="font-size:0.80rem; font-weight:bold; color:var(--neon-cyan)">CONFIDENCE: 92.4%</span>
+          </div>
+
+          <div class="gauge-container">
+            <div id="gauge-bar" class="gauge-bar"></div>
+          </div>
+
+          <div class="diag-grid">
+            <div class="diag-chip" id="diag-speed">Velocity: <b>75 km/h</b> (Aerial)</div>
+            <div class="diag-chip" id="diag-alt">Altitude: <b>90 m</b> (Rooftop)</div>
+            <div class="diag-chip" id="diag-crime">Crime Link: <b>350 m</b> (Active)</div>
+            <div class="diag-chip" id="diag-conf">Sensors: <b>0.82</b> (High Signal)</div>
+          </div>
+
+          <p style="color: var(--text-muted); font-size: 0.72rem; margin-top:6px; line-height:1.35;" id="result-explanation">
             High altitude web-swinging kinematics coupled with close proximity to verified crime event matches authentic Peter Parker profile.
           </p>
         </div>
+
+        <button class="scan-action-btn" onclick="runSpiderSenseScan(true)">Target & Scan on Map</button>
       </div>
     </div>
 
@@ -728,47 +867,381 @@
       document.getElementById('val-' + name).innerText = val;
     }
 
-    // Client-side K-NN Heuristic Classifier Demo
-    function runSpiderSenseScan() {
+    // --- TACTICAL SOUND SYNTHESIZER (Web Audio API) ---
+    let audioCtx = null;
+    function playTacticalChirp(freq = 880, duration = 0.12) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.6, audioCtx.currentTime + duration);
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    // --- ACTIVE TARGET LOCATION STATE ---
+    const presetLocations = {
+      times_sq:    { name: "Times Square / Midtown", lat: 40.7580, lon: -73.9855 },
+      wall_st:     { name: "Financial District / Wall St", lat: 40.7075, lon: -74.0090 },
+      dumbo:       { name: "DUMBO / Brooklyn Bridge", lat: 40.7028, lon: -73.9890 },
+      williamsburg:{ name: "Williamsburg Highline", lat: 40.7130, lon: -73.9550 },
+      astoria:     { name: "Astoria Boulevard", lat: 40.7644, lon: -73.9235 },
+      bronx:       { name: "South Bronx Transit Hub", lat: 40.8160, lon: -73.9240 },
+      secret_base: { name: "★ Secret Base Perimeter", lat: 40.58975, lon: -74.01696 }
+    };
+
+    let currentScanLat = presetLocations.times_sq.lat;
+    let currentScanLon = presetLocations.times_sq.lon;
+    let currentLocName = presetLocations.times_sq.name;
+
+    // Custom Dynamic Marker on Leaflet Map
+    function createPulseIcon(isVerified) {
+      const cls = isVerified ? '' : 'hoax';
+      const iconChar = isVerified ? '🕷️' : '🗞️';
+      return L.divIcon({
+        className: 'scan-marker-icon',
+        html: `
+          <div class="scan-pulse-container">
+            <div class="scan-pulse-ring ${cls}"></div>
+            <div class="scan-pulse-dot ${cls}"></div>
+          </div>
+        `,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+    }
+
+    const scanMarker = L.marker([currentScanLat, currentScanLon], {
+      icon: createPulseIcon(true),
+      zIndexOffset: 1000
+    }).addTo(map);
+
+    const scanHalo = L.circle([currentScanLat, currentScanLon], {
+      radius: 450,
+      color: '#D82C2C',
+      fillColor: '#D82C2C',
+      fillOpacity: 0.15,
+      weight: 1.5
+    }).addTo(map);
+
+    // Map Click Listener: Reposition incident to anywhere the user clicks
+    map.on('click', function(e) {
+      currentScanLat = e.latlng.lat;
+      currentScanLon = e.latlng.lng;
+      currentLocName = `Custom (${currentScanLat.toFixed(4)}°, ${currentScanLon.toFixed(4)}°)`;
+      document.getElementById('val-loc').innerText = `${currentScanLat.toFixed(3)}°, ${currentScanLon.toFixed(3)}°`;
+      document.getElementById('select-loc').value = '';
+      runSpiderSenseScan(false);
+      playTacticalChirp(920, 0.08);
+    });
+
+    function setPresetLocation(key) {
+      if (!presetLocations[key]) return;
+      const target = presetLocations[key];
+      currentScanLat = target.lat;
+      currentScanLon = target.lon;
+      currentLocName = target.name;
+      document.getElementById('val-loc').innerText = target.name.split(' ')[0];
+      runSpiderSenseScan(true);
+    }
+
+    // --- LIVE K-NN SIGHTING SCANNER ---
+    function runSpiderSenseScan(panMap = false) {
       const speed = parseFloat(document.getElementById('input-speed').value);
       const alt = parseFloat(document.getElementById('input-alt').value);
       const witnesses = parseFloat(document.getElementById('input-witness').value);
       const crimeDist = parseFloat(document.getElementById('input-crime').value);
       const conf = parseFloat(document.getElementById('input-conf').value);
 
-      // Tuned Decision Score (mimicking trained model weights)
-      let score = (conf * 0.40) +
-                  (Math.min(speed / 80, 1.2) * 0.20) +
-                  (Math.min(alt / 120, 1.2) * 0.20) +
-                  (Math.max(0, 1 - (crimeDist / 2000)) * 0.15) +
-                  (Math.min(witnesses / 6, 1.0) * 0.05);
+      // Model Feature Scoring
+      const speedScore = Math.min(speed / 90, 1.2);
+      const altScore = Math.min(alt / 110, 1.2);
+      const crimeScore = Math.max(0, 1.0 - (crimeDist / 2200));
+      const witnessScore = Math.min(witnesses / 6, 1.0);
+      const confScore = conf;
 
-      const probability = Math.min(99.4, Math.max(8.5, score * 100));
-      const isVerified = probability >= 55.0;
+      let score = (speedScore * 0.25) +
+                  (altScore * 0.25) +
+                  (crimeScore * 0.25) +
+                  (confScore * 0.20) +
+                  (witnessScore * 0.05);
 
-      const resultBox = document.getElementById('scanner-result');
+      const probability = Math.min(99.4, Math.max(6.2, score * 100));
+      const isVerified = probability >= 52.0;
+
+      // Update UI elements
       const badge = document.getElementById('result-badge');
       const scoreEl = document.getElementById('result-score');
       const descEl = document.getElementById('result-explanation');
+      const gaugeBar = document.getElementById('gauge-bar');
+      const resBox = document.getElementById('scanner-result');
 
-      resultBox.style.display = 'block';
+      gaugeBar.style.width = `${probability.toFixed(1)}%`;
+
+      // Update diagnostic chips
+      const diagSpeed = document.getElementById('diag-speed');
+      const diagAlt = document.getElementById('diag-alt');
+      const diagCrime = document.getElementById('diag-crime');
+      const diagConf = document.getElementById('diag-conf');
+
+      diagSpeed.innerHTML = `Velocity: <b>${Math.round(speed)} km/h</b> (${speed >= 50 ? 'Aerial Swing' : 'Street Level'})`;
+      diagAlt.innerHTML = `Altitude: <b>${Math.round(alt)} m</b> (${alt >= 30 ? 'Rooftop Traverse' : 'Ground Level'})`;
+      diagCrime.innerHTML = `Crime Link: <b>${Math.round(crimeDist)} m</b> (${crimeDist <= 600 ? 'Active Event' : 'Distant'})`;
+      diagConf.innerHTML = `Sensors: <b>${conf.toFixed(2)}</b> (${conf >= 0.7 ? 'High Signal' : 'Low Reliability'})`;
 
       if (isVerified) {
         badge.className = 'result-badge verified';
-        badge.innerText = '🕷️ CONFIRMED SPIDER-MAN SIGHTING';
-        resultBox.style.borderColor = 'var(--spidey-red)';
-        resultBox.style.background = 'rgba(216, 44, 44, 0.12)';
-        scoreEl.innerText = `AUTHENTICITY CONFIDENCE: ${probability.toFixed(1)}%`;
-        descEl.innerText = 'High-velocity aerial trajectory and crime correlation match authentic Spider-Man patrol signature.';
+        badge.innerText = '🕷️ CONFIRMED SPIDER-MAN';
+        resBox.style.borderColor = 'var(--spidey-red)';
+        resBox.style.background = 'rgba(216, 44, 44, 0.10)';
+        scoreEl.innerText = `AUTHENTICITY: ${probability.toFixed(1)}%`;
+        scoreEl.style.color = 'var(--spidey-red)';
+        gaugeBar.style.background = 'linear-gradient(90deg, #F1C40F, #FF5722, #D82C2C)';
+        gaugeBar.style.boxShadow = '0 0 12px rgba(216, 44, 44, 0.7)';
+        descEl.innerText = `High-velocity aerial trajectory (${speed} km/h at ${alt} m elevation) with close active crime correlation matches authentic Peter Parker telemetry signature.`;
       } else {
         badge.className = 'result-badge hoax';
-        badge.innerText = '🗞️ DAILY BUGLE HOAX / IMPOSTER';
-        resultBox.style.borderColor = '#8E44AD';
-        resultBox.style.background = 'rgba(142, 68, 173, 0.12)';
-        scoreEl.innerText = `HOAX PROBABILITY: ${(100 - probability).toFixed(1)}%`;
-        descEl.innerText = 'Ground-level stationary reading with no crime connection indicates cosplayer or staged social media rumor.';
+        badge.innerText = '🗞️ DAILY BUGLE HOAX';
+        resBox.style.borderColor = '#8E44AD';
+        resBox.style.background = 'rgba(142, 68, 173, 0.10)';
+        scoreEl.innerText = `HOAX CHANCE: ${(100 - probability).toFixed(1)}%`;
+        scoreEl.style.color = '#B388FF';
+        gaugeBar.style.background = 'linear-gradient(90deg, #311B92, #7B1FA2, #8E44AD)';
+        gaugeBar.style.boxShadow = '0 0 12px rgba(142, 68, 173, 0.7)';
+        descEl.innerText = `Low altitude stationary trajectory (${speed} km/h at ${alt} m elevation) with distant crime correlation (${crimeDist} m) indicates street cosplayer or civilian false alarm.`;
+      }
+
+      // Update Map Marker and Halo
+      scanMarker.setLatLng([currentScanLat, currentScanLon]);
+      scanMarker.setIcon(createPulseIcon(isVerified));
+      scanHalo.setLatLng([currentScanLat, currentScanLon]);
+      scanHalo.setStyle({
+        color: isVerified ? '#D82C2C' : '#8E44AD',
+        fillColor: isVerified ? '#D82C2C' : '#8E44AD'
+      });
+
+      scanMarker.bindPopup(`
+        <div style="font-family:'Share Tech Mono',monospace; color:#0A1E3C; line-height:1.45; min-width:200px;">
+          <h4 style="color:${isVerified ? '#D82C2C' : '#8E44AD'}; margin-bottom:4px; font-size:0.95rem;">
+            ${isVerified ? '🕷️ VERIFIED SPIDER-MAN SIGHTING' : '🗞️ DAILY BUGLE HOAX DETECTED'}
+          </h4>
+          <b>Location:</b> ${currentLocName}<br>
+          <b>Coordinates:</b> ${currentScanLat.toFixed(4)}° N, ${currentScanLon.toFixed(4)}° W<br>
+          <b>Authenticity Score:</b> ${probability.toFixed(1)}%<br>
+          <b>Telemetry:</b> ${speed} km/h • ${alt} m alt • ${crimeDist} m to crime<br>
+          <b>Witnesses:</b> ${witnesses} observers (Confidence: ${conf})
+        </div>
+      `);
+
+      if (panMap) {
+        playTacticalChirp(isVerified ? 1040 : 620, 0.18);
+        map.flyTo([currentScanLat, currentScanLon], 14, { duration: 1.2 });
+        setTimeout(() => scanMarker.openPopup(), 1250);
       }
     }
+
+    // --- ACTIVE 60FPS TACTICAL CANVAS RADAR ENGINE ---
+    const radarCanvas = document.getElementById('radar-canvas');
+    const radarCtx = radarCanvas.getContext('2d');
+    const RADAR_SIZE = 300;
+    const CENTER = RADAR_SIZE / 2;
+    const MAX_R = CENTER - 18;
+
+    let sweepAngle = 0;
+    const ambientBlips = [];
+
+    // Helper: Map GPS coordinates to radar polar coordinates
+    function geoToRadar(lat, lon) {
+      const centerLat = 40.7128;
+      const centerLon = -73.9850;
+      const dx = (lon - centerLon) / 0.16;
+      const dy = (lat - centerLat) / 0.16;
+      const r = Math.min(MAX_R * 0.92, Math.sqrt(dx*dx + dy*dy) * (MAX_R * 0.70));
+      const angle = Math.atan2(-dy, dx);
+      return {
+        x: CENTER + r * Math.cos(angle),
+        y: CENTER + r * Math.sin(angle),
+        angle: (angle + Math.PI * 2) % (Math.PI * 2)
+      };
+    }
+
+    // Spawn ambient NYPD scanner radio blips across the city
+    setInterval(() => {
+      if (ambientBlips.length < 5) {
+        const rndLat = 40.65 + Math.random() * 0.18;
+        const rndLon = -74.02 + Math.random() * 0.16;
+        ambientBlips.push({
+          lat: rndLat,
+          lon: rndLon,
+          intensity: 1.0,
+          decay: 0.006 + Math.random() * 0.008
+        });
+      }
+    }, 2800);
+
+    function drawRadarFrame() {
+      radarCtx.clearRect(0, 0, RADAR_SIZE, RADAR_SIZE);
+
+      // Radar Background & Concentric Rings
+      radarCtx.strokeStyle = 'rgba(0, 229, 255, 0.22)';
+      radarCtx.lineWidth = 1.2;
+
+      [0.3, 0.6, 0.9].forEach(factor => {
+        radarCtx.beginPath();
+        radarCtx.arc(CENTER, CENTER, MAX_R * factor, 0, Math.PI * 2);
+        radarCtx.stroke();
+      });
+
+      // Crosshairs
+      radarCtx.strokeStyle = 'rgba(0, 229, 255, 0.28)';
+      radarCtx.beginPath();
+      radarCtx.moveTo(CENTER - MAX_R, CENTER);
+      radarCtx.lineTo(CENTER + MAX_R, CENTER);
+      radarCtx.moveTo(CENTER, CENTER - MAX_R);
+      radarCtx.lineTo(CENTER, CENTER + MAX_R);
+      radarCtx.stroke();
+
+      // Cardinal Labels
+      radarCtx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+      radarCtx.font = 'bold 9px monospace';
+      radarCtx.textAlign = 'center';
+      radarCtx.textBaseline = 'middle';
+      radarCtx.fillText('N', CENTER, CENTER - MAX_R + 8);
+      radarCtx.fillText('S', CENTER, CENTER + MAX_R - 8);
+      radarCtx.fillText('W', CENTER - MAX_R + 8, CENTER);
+      radarCtx.fillText('E', CENTER + MAX_R - 8, CENTER);
+
+      // Sweep Beam (Conic gradient tail)
+      sweepAngle = (sweepAngle + 0.024) % (Math.PI * 2);
+
+      const sweepGrad = radarCtx.createRadialGradient(CENTER, CENTER, 0, CENTER, CENTER, MAX_R);
+      sweepGrad.addColorStop(0, 'rgba(0, 229, 255, 0.35)');
+      sweepGrad.addColorStop(1, 'rgba(0, 229, 255, 0.02)');
+
+      radarCtx.save();
+      radarCtx.beginPath();
+      radarCtx.moveTo(CENTER, CENTER);
+      radarCtx.arc(CENTER, CENTER, MAX_R, sweepAngle - 0.55, sweepAngle);
+      radarCtx.closePath();
+      radarCtx.fillStyle = sweepGrad;
+      radarCtx.fill();
+
+      // Leading Sweep Line
+      radarCtx.beginPath();
+      radarCtx.moveTo(CENTER, CENTER);
+      radarCtx.lineTo(CENTER + MAX_R * Math.cos(sweepAngle), CENTER + MAX_R * Math.sin(sweepAngle));
+      radarCtx.strokeStyle = '#00E5FF';
+      radarCtx.lineWidth = 2.0;
+      radarCtx.stroke();
+      radarCtx.restore();
+
+      // Function to calculate phosphor glow persistence
+      function getGlow(targetAngle) {
+        let diff = (sweepAngle - targetAngle + Math.PI * 2) % (Math.PI * 2);
+        return Math.max(0.18, 1.0 - (diff / (Math.PI * 1.2)));
+      }
+
+      // 1. Draw Patrol Sector Centroid Blips (K-Means Sectors)
+      patrolClusters.forEach(sector => {
+        const pt = geoToRadar(sector.lat, sector.lon);
+        const glow = getGlow(pt.angle);
+
+        radarCtx.fillStyle = `rgba(0, 229, 255, ${glow * 0.9})`;
+        radarCtx.beginPath();
+        radarCtx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
+        radarCtx.fill();
+
+        if (glow > 0.8) {
+          radarCtx.strokeStyle = `rgba(0, 229, 255, ${(glow - 0.7) * 2.5})`;
+          radarCtx.lineWidth = 1;
+          radarCtx.beginPath();
+          radarCtx.arc(pt.x, pt.y, 8, 0, Math.PI * 2);
+          radarCtx.stroke();
+        }
+      });
+
+      // 2. Draw Secret Sanctuary Blip (Brooklyn Central - Golden Star Beacon)
+      const basePt = geoToRadar(baseCoords[0], baseCoords[1]);
+      const baseGlow = getGlow(basePt.angle);
+      radarCtx.fillStyle = `rgba(241, 196, 15, ${Math.max(0.6, baseGlow)})`;
+      radarCtx.shadowColor = '#F1C40F';
+      radarCtx.shadowBlur = 10;
+      radarCtx.beginPath();
+      radarCtx.arc(basePt.x, basePt.y, 4.5, 0, Math.PI * 2);
+      radarCtx.fill();
+      radarCtx.shadowBlur = 0;
+
+      // 3. Draw Active Scanner Incident Blip (Live user target)
+      const scanPt = geoToRadar(currentScanLat, currentScanLon);
+      const scanGlow = getGlow(scanPt.angle);
+      const isCurVerified = document.getElementById('result-badge').classList.contains('verified');
+      const targetColor = isCurVerified ? '226, 54, 54' : '142, 68, 173';
+
+      radarCtx.fillStyle = `rgba(${targetColor}, ${Math.max(0.7, scanGlow)})`;
+      radarCtx.shadowColor = isCurVerified ? '#E23636' : '#8E44AD';
+      radarCtx.shadowBlur = 12;
+      radarCtx.beginPath();
+      radarCtx.arc(scanPt.x, scanPt.y, 5.5, 0, Math.PI * 2);
+      radarCtx.fill();
+      radarCtx.shadowBlur = 0;
+
+      // Concentric target ring around active scan blip
+      radarCtx.strokeStyle = `rgba(${targetColor}, ${scanGlow * 0.8})`;
+      radarCtx.lineWidth = 1.2;
+      radarCtx.beginPath();
+      radarCtx.arc(scanPt.x, scanPt.y, 9.5, 0, Math.PI * 2);
+      radarCtx.stroke();
+
+      // 4. Draw Ambient Emergency Intercept Blips
+      for (let i = ambientBlips.length - 1; i >= 0; i--) {
+        const b = ambientBlips[i];
+        b.intensity -= b.decay;
+        if (b.intensity <= 0) {
+          ambientBlips.splice(i, 1);
+          continue;
+        }
+        const apt = geoToRadar(b.lat, b.lon);
+        const aGlow = getGlow(apt.angle) * b.intensity;
+        radarCtx.fillStyle = `rgba(0, 255, 128, ${aGlow * 0.85})`;
+        radarCtx.beginPath();
+        radarCtx.arc(apt.x, apt.y, 2.5, 0, Math.PI * 2);
+        radarCtx.fill();
+      }
+
+      requestAnimationFrame(drawRadarFrame);
+    }
+
+    // Radar Click Cycling Function
+    let radarFocusMode = 0;
+    function cycleRadarFocus() {
+      playTacticalChirp(800, 0.08);
+      radarFocusMode = (radarFocusMode + 1) % 3;
+      const statusEl = document.getElementById('radar-status');
+
+      if (radarFocusMode === 0) {
+        statusEl.innerText = 'FOCUS: ACTIVE SCAN';
+        map.flyTo([currentScanLat, currentScanLon], 14, { duration: 1.4 });
+        setTimeout(() => scanMarker.openPopup(), 1450);
+      } else if (radarFocusMode === 1) {
+        statusEl.innerText = 'FOCUS: SECRET BASE';
+        focusSecretBase();
+      } else {
+        statusEl.innerText = 'FOCUS: CITYWIDE PATROL';
+        map.flyTo([40.7128, -73.9850], 12, { duration: 1.4 });
+      }
+    }
+
+    // Initialize Radar Loop & Initial Scanner Evaluation
+    drawRadarFrame();
+    runSpiderSenseScan(false);
   </script>
 </body>
 </html>
