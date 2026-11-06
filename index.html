@@ -259,6 +259,65 @@
       z-index: 2;
     }
 
+    
+    /* Top Threat Meter in Scanner */
+    .scanner-top-card {
+      background: rgba(4, 12, 28, 0.85);
+      border: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+      padding: 10px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+
+    .slider-tag {
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: 2px;
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--neon-cyan);
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .slider-tag.warning {
+      background: rgba(142, 68, 173, 0.25);
+      color: #D1A8FF;
+    }
+
+    .slider-tag.alert {
+      background: rgba(226, 54, 54, 0.25);
+      color: #FFA5A5;
+    }
+
+    /* Screen HUD Toast Notification */
+    .hud-toast {
+      position: absolute;
+      top: 54px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(3, 10, 22, 0.9);
+      border: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+      color: #FFF;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.76rem;
+      padding: 6px 16px;
+      border-radius: 20px;
+      z-index: 999;
+      pointer-events: none;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+
+    .hud-toast.hoax {
+      border-color: #8E44AD;
+      box-shadow: 0 0 20px rgba(142, 68, 173, 0.4);
+    }
+
     /* Location Selector & Live Threat Meter */
     .hud-select {
       width: 100%;
@@ -648,61 +707,15 @@
         <button class="close-btn" onclick="toggleModal('modal-scanner')">✕</button>
       </div>
       <div class="modal-content">
-        <p style="color: var(--text-muted); margin-bottom: 14px; font-size: 0.78rem;">
-          Input witness sensor observations into our tuned K-NN Spider-Sense model to separate authentic emergencies from Daily Bugle hoaxes.
-        </p>
-
-        <!-- Incident Geographic Location Selector -->
-        <div class="form-group">
-          <label><span>Incident Location:</span> <span id="val-loc" style="color:var(--spider-gold)">Times Square</span></label>
-          <select id="select-loc" class="hud-select" onchange="setPresetLocation(this.value)">
-            <option value="times_sq">Times Square / Midtown (Manhattan)</option>
-            <option value="wall_st">Financial District / Wall St (Manhattan)</option>
-            <option value="dumbo">DUMBO / Brooklyn Bridge (Brooklyn)</option>
-            <option value="williamsburg">Williamsburg Highline (Brooklyn)</option>
-            <option value="astoria">Astoria Boulevard (Queens)</option>
-            <option value="bronx">South Bronx Transit Hub (Bronx)</option>
-            <option value="secret_base">★ Secret Sanctuary Vicinity (Brooklyn Central)</option>
-          </select>
-          <div style="font-size:0.68rem; color:var(--text-muted); margin-top:3px;">
-            💡 <i>Click anywhere on the city map to instantly reposition incident coordinates!</i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label><span>Velocity (km/h):</span> <span id="val-speed" style="color:var(--neon-cyan)">75</span></label>
-          <input type="range" id="input-speed" min="0" max="140" value="75" oninput="updateVal('speed', this.value); runSpiderSenseScan(false)">
-        </div>
-
-        <div class="form-group">
-          <label><span>Altitude (meters):</span> <span id="val-alt" style="color:var(--neon-cyan)">90</span></label>
-          <input type="range" id="input-alt" min="0" max="250" value="90" oninput="updateVal('alt', this.value); runSpiderSenseScan(false)">
-        </div>
-
-        <div class="form-group">
-          <label><span>Witness Count:</span> <span id="val-witness" style="color:var(--neon-cyan)">4</span></label>
-          <input type="range" id="input-witness" min="1" max="15" value="4" oninput="updateVal('witness', this.value); runSpiderSenseScan(false)">
-        </div>
-
-        <div class="form-group">
-          <label><span>Distance to Nearest Crime (m):</span> <span id="val-crime" style="color:var(--neon-cyan)">350</span></label>
-          <input type="range" id="input-crime" min="50" max="3000" step="50" value="350" oninput="updateVal('crime', this.value); runSpiderSenseScan(false)">
-        </div>
-
-        <div class="form-group">
-          <label><span>Tracker Sensor Confidence:</span> <span id="val-conf" style="color:var(--neon-cyan)">0.82</span></label>
-          <input type="range" id="input-conf" min="0.10" max="1.0" step="0.05" value="0.82" oninput="updateVal('conf', this.value); runSpiderSenseScan(false)">
-        </div>
-
-        <!-- Live Authenticity Threat Meter & Diagnostic Chips -->
-        <div id="scanner-result" class="scanner-result">
+        <!-- TOP: LIVE SPIDER-SENSE METER (Always Visible in Direct Sight!) -->
+        <div class="scanner-top-card" id="scanner-result">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
             <div id="result-badge" class="result-badge verified">🕷️ CONFIRMED SPIDER-MAN</div>
-            <span id="result-score" style="font-size:0.80rem; font-weight:bold; color:var(--neon-cyan)">CONFIDENCE: 92.4%</span>
+            <span id="result-score" style="font-size:0.85rem; font-weight:bold; color:var(--spidey-red)">AUTHENTICITY: 88.5%</span>
           </div>
 
           <div class="gauge-container">
-            <div id="gauge-bar" class="gauge-bar"></div>
+            <div id="gauge-bar" class="gauge-bar" style="width: 88.5%;"></div>
           </div>
 
           <div class="diag-grid">
@@ -712,13 +725,77 @@
             <div class="diag-chip" id="diag-conf">Sensors: <b>0.82</b> (High Signal)</div>
           </div>
 
-          <p style="color: var(--text-muted); font-size: 0.72rem; margin-top:6px; line-height:1.35;" id="result-explanation">
-            High altitude web-swinging kinematics coupled with close proximity to verified crime event matches authentic Peter Parker profile.
-          </p>
+          <div style="color: #A8E1FE; font-size: 0.72rem; margin-top:6px; line-height:1.35;" id="result-explanation">
+            High altitude web-swinging kinematics with close crime correlation matches authentic Peter Parker telemetry signature.
+          </div>
         </div>
 
-        <button class="scan-action-btn" onclick="runSpiderSenseScan(true)">Target & Scan on Map</button>
+        <!-- Incident Geographic Location Selector -->
+        <div class="form-group">
+          <label><span>Simulate Location:</span> <span id="val-loc" style="color:var(--spider-gold)">Times Square</span></label>
+          <select id="select-loc" class="hud-select" onchange="setPresetLocation(this.value)">
+            <option value="times_sq">Times Square / Midtown (Manhattan)</option>
+            <option value="wall_st">Financial District / Wall St (Manhattan)</option>
+            <option value="dumbo">DUMBO / Brooklyn Bridge (Brooklyn)</option>
+            <option value="williamsburg">Williamsburg Highline (Brooklyn)</option>
+            <option value="astoria">Astoria Boulevard (Queens)</option>
+            <option value="bronx">South Bronx Transit Hub (Bronx)</option>
+            <option value="secret_base">★ Secret Sanctuary Vicinity (Brooklyn Central)</option>
+          </select>
+          <div style="font-size:0.67rem; color:var(--text-muted); margin-top:2px;">
+            💡 <i>Click anywhere on the map to set coordinates!</i>
+          </div>
+        </div>
+
+        <!-- 5 Interactive Live Sliders -->
+        <div class="form-group">
+          <label>
+            <span>Velocity: <b id="val-speed" style="color:var(--neon-cyan)">75 km/h</b></span>
+            <span id="tag-speed" class="slider-tag alert">AERIAL SWING</span>
+          </label>
+          <input type="range" id="input-speed" min="0" max="140" value="75" oninput="onSliderMove('speed', this.value)">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>Altitude: <b id="val-alt" style="color:var(--neon-cyan)">90 m</b></span>
+            <span id="tag-alt" class="slider-tag alert">ROOFTOP</span>
+          </label>
+          <input type="range" id="input-alt" min="0" max="250" value="90" oninput="onSliderMove('alt', this.value)">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>Witness Count: <b id="val-witness" style="color:var(--neon-cyan)">4</b></span>
+            <span id="tag-witness" class="slider-tag">RELIABLE</span>
+          </label>
+          <input type="range" id="input-witness" min="1" max="15" value="4" oninput="onSliderMove('witness', this.value)">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>Crime Proximity: <b id="val-crime" style="color:var(--neon-cyan)">350 m</b></span>
+            <span id="tag-crime" class="slider-tag alert">ACTIVE 911 EVENT</span>
+          </label>
+          <input type="range" id="input-crime" min="50" max="3000" step="50" value="350" oninput="onSliderMove('crime', this.value)">
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>Tracker Confidence: <b id="val-conf" style="color:var(--neon-cyan)">0.82</b></span>
+            <span id="tag-conf" class="slider-tag">HIGH SIGNAL</span>
+          </label>
+          <input type="range" id="input-conf" min="0.10" max="1.0" step="0.05" value="0.82" oninput="onSliderMove('conf', this.value)">
+        </div>
+
+        <button class="scan-action-btn" onclick="runSpiderSenseScan(true)">🎯 Focus & Ping on Map</button>
       </div>
+    </div>
+
+    <!-- Live Floating HUD Toast -->
+    <div id="hud-toast" class="hud-toast" style="display:none;">
+      <span id="toast-icon">🕷️</span>
+      <span id="toast-text">SPIDER-SENSE CALIBRATED: 88.5% AUTHENTIC</span>
     </div>
 
     <!-- Modal 2: Suit Upgrades (Progressive Model Evolution) -->
@@ -954,6 +1031,17 @@
     }
 
     // --- LIVE K-NN SIGHTING SCANNER ---
+    
+    function onSliderMove(name, val) {
+      if (name === 'speed') document.getElementById('val-speed').innerText = val + ' km/h';
+      else if (name === 'alt') document.getElementById('val-alt').innerText = val + ' m';
+      else if (name === 'crime') document.getElementById('val-crime').innerText = val + ' m';
+      else if (name === 'witness') document.getElementById('val-witness').innerText = val;
+      else if (name === 'conf') document.getElementById('val-conf').innerText = val;
+
+      runSpiderSenseScan(false);
+    }
+
     function runSpiderSenseScan(panMap = false) {
       const speed = parseFloat(document.getElementById('input-speed').value);
       const alt = parseFloat(document.getElementById('input-alt').value);
@@ -996,6 +1084,45 @@
       diagAlt.innerHTML = `Altitude: <b>${Math.round(alt)} m</b> (${alt >= 30 ? 'Rooftop Traverse' : 'Ground Level'})`;
       diagCrime.innerHTML = `Crime Link: <b>${Math.round(crimeDist)} m</b> (${crimeDist <= 600 ? 'Active Event' : 'Distant'})`;
       diagConf.innerHTML = `Sensors: <b>${conf.toFixed(2)}</b> (${conf >= 0.7 ? 'High Signal' : 'Low Reliability'})`;
+
+      // Update individual slider tags
+      const tagSpeed = document.getElementById('tag-speed');
+      const tagAlt = document.getElementById('tag-alt');
+      const tagCrime = document.getElementById('tag-crime');
+      const tagWitness = document.getElementById('tag-witness');
+      const tagConf = document.getElementById('tag-conf');
+
+      if (speed >= 55) { tagSpeed.className = 'slider-tag alert'; tagSpeed.innerText = 'AERIAL SWING'; }
+      else if (speed >= 25) { tagSpeed.className = 'slider-tag'; tagSpeed.innerText = 'VEHICULAR'; }
+      else { tagSpeed.className = 'slider-tag warning'; tagSpeed.innerText = 'STREET LEVEL'; }
+
+      if (alt >= 40) { tagAlt.className = 'slider-tag alert'; tagAlt.innerText = 'ROOFTOP'; }
+      else if (alt >= 15) { tagAlt.className = 'slider-tag'; tagAlt.innerText = 'MID-LEVEL'; }
+      else { tagAlt.className = 'slider-tag warning'; tagAlt.innerText = 'GROUND LEVEL'; }
+
+      if (crimeDist <= 500) { tagCrime.className = 'slider-tag alert'; tagCrime.innerText = 'ACTIVE 911 EVENT'; }
+      else if (crimeDist <= 1200) { tagCrime.className = 'slider-tag'; tagCrime.innerText = 'NEIGHBORHOOD'; }
+      else { tagCrime.className = 'slider-tag warning'; tagCrime.innerText = 'NO CRIME NEARBY'; }
+
+      if (witnesses >= 6) { tagWitness.className = 'slider-tag alert'; tagWitness.innerText = 'MASS SIGHTING'; }
+      else if (witnesses >= 3) { tagWitness.className = 'slider-tag'; tagWitness.innerText = 'RELIABLE'; }
+      else { tagWitness.className = 'slider-tag warning'; tagWitness.innerText = 'LONE OBSERVER'; }
+
+      if (conf >= 0.7) { tagConf.className = 'slider-tag alert'; tagConf.innerText = 'HIGH SIGNAL'; }
+      else if (conf >= 0.4) { tagConf.className = 'slider-tag'; tagConf.innerText = 'MODERATE'; }
+      else { tagConf.className = 'slider-tag warning'; tagConf.innerText = 'LOW CONFIDENCE'; }
+
+      // Update Screen HUD Toast
+      const toast = document.getElementById('hud-toast');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+      if (toast) {
+        toast.style.display = 'flex';
+        toast.className = isVerified ? 'hud-toast' : 'hud-toast hoax';
+        toastIcon.innerText = isVerified ? '🕷️' : '🗞️';
+        toastText.innerText = `${isVerified ? 'VERIFIED SPIDER-MAN' : 'DAILY BUGLE HOAX'} • ${probability.toFixed(1)}% AUTHENTICITY`;
+      }
+
 
       if (isVerified) {
         badge.className = 'result-badge verified';
